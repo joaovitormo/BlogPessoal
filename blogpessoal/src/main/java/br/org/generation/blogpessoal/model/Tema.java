@@ -1,5 +1,6 @@
 package br.org.generation.blogpessoal.model;
 
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
@@ -23,6 +25,10 @@ public class Tema {
 	
 	@NotNull(/*message = "O atributo Descrição deve ser obrigatório"*/)
 	private String descricao;
+	
+	
+	@Transient
+	private int qtdTema;
 	
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("tema")
@@ -51,5 +57,15 @@ public class Tema {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
+
+	public int getQtdTema() {
+		return qtdTema;
+	}
+
+	public void setQtdTema(int qtdTema) {
+		this.qtdTema = qtdTema;
+	}
+	
+	
 
 }

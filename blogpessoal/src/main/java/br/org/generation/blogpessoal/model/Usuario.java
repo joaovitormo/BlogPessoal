@@ -1,8 +1,10 @@
 package br.org.generation.blogpessoal.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
@@ -30,12 +33,29 @@ public class Usuario {
 	@NotNull
 	@Size(min=2, max=100)
 	@Email
-	private String usuario;
+	private String login;
 	
 	@NotNull
 	@Size(min=5)
 	private String senha;
 	
+	@Column(name="dt_nascimento")
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate dataNascimento; // Atributo adcional
+	
+	
+	public Usuario() {
+		
+		
+	}
+	
+	public Usuario(long id, String nome,  String login, String senha, LocalDate dataNascimento ) {
+		this.id = id;
+		this.nome = nome;
+		this.login = login;
+		this.senha = senha;
+		this.dataNascimento = dataNascimento;
+	}
 	
 	@OneToMany(mappedBy="usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
@@ -62,15 +82,13 @@ public class Usuario {
 	}
 
 
-	public String getUsuario() {
-		return usuario;
+	public String getLogin() {
+		return login;
 	}
 
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setLogin(String login) {
+		this.login = login;
 	}
-
 
 	public String getSenha() {
 		return senha;
@@ -90,6 +108,16 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+	
+	
 	
 	
 	
